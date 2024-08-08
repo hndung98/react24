@@ -1,0 +1,53 @@
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import ReactMarkdown from 'markdown-to-jsx';
+
+function MarkdownListItem() {
+  return <Box component="li" sx={{ mt: 1, typography: 'body1' }}/>;
+}
+
+const options = {
+  overrides: {
+    h1: {
+      component: Typography,
+      props: {
+        gutterBottom: true,
+        variant: 'h4',
+        component: 'h1',
+      },
+    },
+    h2: {
+      component: Typography,
+      props: { gutterBottom: true, variant: 'h6', component: 'h2' },
+    },
+    h3: {
+      component: Typography,
+      props: { gutterBottom: true, variant: 'subtitle1' },
+    },
+    h4: {
+      component: Typography,
+      props: {
+        gutterBottom: true,
+        variant: 'caption',
+        paragraph: true,
+      },
+    },
+    p: {
+      component: Typography,
+      props: { paragraph: true },
+    },
+    a: { component: Link },
+    li: {
+      component: MarkdownListItem,
+    },
+  },
+};
+
+type MartdownType = {
+  children: string;
+  className: string;
+}
+export default function Markdown(props: MartdownType) {
+  return <ReactMarkdown options={options} children={props.children} className={props.className}/>;
+}

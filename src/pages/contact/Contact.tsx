@@ -1,15 +1,15 @@
 import {
-  Form,
-  useLoaderData,
-  redirect,
   ActionFunction,
+  ActionFunctionArgs,
+  Form,
   ParamParseKey,
   Params,
-  ActionFunctionArgs,
+  redirect,
+  useLoaderData,
   useNavigate,
 } from "react-router-dom";
-import { ContactType } from "../../common/types/user";
 import { LoaderType } from "../../common/types/loader";
+import { ContactType } from "../../common/types/user";
 
 export default function Contact() {
   const { data } = useLoaderData() as LoaderType;

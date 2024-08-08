@@ -2,22 +2,31 @@ import React, { ReactElement } from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Outlet,
+  Route,
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import ErrorPage from "./pages/error/index.tsx";
-import HomePage from "./pages/home/index.tsx";
-import LoginPage from "./pages/login/index.tsx";
-import ContactPage from "./pages/contact/index.tsx";
-import IntroPage from "./pages/intro/index.tsx";
+import BlogPage from "./pages/Blog/index.tsx";
+import CheckoutPage from "./pages/Checkout/index.tsx";
 import Contact, {
   ContactIndex,
-  EditContact,
   destroyAction,
   editAction,
-} from "./pages/contact/Contact.tsx";
-import { getContact, getContacts, createContact } from "./services/Axios.ts";
+  EditContact,
+} from "./pages/Contact/Contact.tsx";
+import ContactPage from "./pages/Contact/index.tsx";
+import DashboardPage from "./pages/Dashboard/index.tsx";
+import ErrorPage from "./pages/Error/index.tsx";
+import HomePage from "./pages/Home/index.tsx";
+import IntroPage from "./pages/Intro/index.tsx";
+import LandingPage from "./pages/Intro/LandingPage.tsx";
+import SignInPage from "./pages/SignIn/index.tsx";
+import SignUpPage from "./pages/SignUp/index.tsx";
+import { createContact, getContact, getContacts } from "./services/Axios.ts";
 
 type RouteObjectType = {
   path: string;
@@ -46,14 +55,34 @@ function createRouterObject(
   return routerObject;
 }
 
-const router = createBrowserRouter([
-  createRouterObject("/", <HomePage />),
+type PrivateRoutesProps = {
+  keyText: string;
+  url: string;
+};
+function PrivateRoutes(props: PrivateRoutesProps) {
+  const isAuth = localStorage.getItem(props.keyText);
+  return isAuth ? <Outlet /> : <Navigate to={props.url} />;
+}
+
+const protectedRoutes = createRoutesFromElements(
+  <Route
+    element={<PrivateRoutes keyText="isAuth" url="/sign-in" />}
+    errorElement={<ErrorPage />}
+  >
+    <Route path="/" element={<HomePage />} />
+    <Route path="/checkout" element={<CheckoutPage />} />
+    <Route path="/dashboard" element={<DashboardPage />} />
+  </Route>
+);
+const publicRoutes = [
+  createRouterObject("/landing", <LandingPage />),
   createRouterObject("/intro", <IntroPage />),
-  createRouterObject("/login", <LoginPage />),
+  createRouterObject("/sign-in", <SignInPage />),
+  createRouterObject("/sign-up", <SignUpPage />),
+  createRouterObject("/blog", <BlogPage />),
   {
     path: "/contacts",
     element: <ContactPage />,
-    errorElement: <ErrorPage />,
     loader: getContacts,
     action: createContact,
     children: [
@@ -79,7 +108,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+const router = createBrowserRouter(protectedRoutes.concat(publicRoutes));
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

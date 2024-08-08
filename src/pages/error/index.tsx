@@ -17,7 +17,7 @@ export default function ErrorPage() {
           <Link to="/contacts">Contacts</Link>
         </h2>
         <h2 id="menu-item">
-          <Link to="/login">Login</Link>
+          <Link to="/sign-in">Login</Link>
         </h2>
       </div>
       <div className="card">
