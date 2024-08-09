@@ -1,3 +1,3 @@
 export function getNowDateTime() {
-  return "";
+  return "" + Date.now();
 }

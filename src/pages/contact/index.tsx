@@ -1,12 +1,12 @@
 import {
   Form,
-  Link,
   NavLink,
   Outlet,
   useLoaderData,
   useNavigation,
-  useSearchParams,
+  useSearchParams
 } from "react-router-dom";
+import UserLayout from "../../common/layouts/UserLayout";
 import { LoaderType } from "../../common/types/loader";
 import "./index.css";
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
   // console.log(contacts.data);
 
   return (
-    <>
+    <UserLayout>
       <div id="contact-main">
         <div id="sidebar">
           <h1>Contacts</h1>
@@ -77,17 +77,9 @@ export default function ContactPage() {
           id="detail"
           className={navigation.state === "loading" ? "loading" : ""}
         >
-          <div id="menu">
-            <h2 id="menu-item">
-              <Link to="/">Home</Link>
-            </h2>
-            <h2 id="menu-item">
-              <Link to="/login">Login</Link>
-            </h2>
-          </div>
           <Outlet />
         </div>
       </div>
-    </>
+    </UserLayout>
   );
 }

@@ -1,4 +1,5 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Backdrop, CircularProgress } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,38 +14,35 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Navigate } from "react-router-dom";
-
-function Copyright() {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      sx={{ mt: 5 }}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../../common/components/Copyright";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUpPage() {
   const isAuth = localStorage.getItem("isAuth");
+
+  const timer = React.useRef<ReturnType<typeof setTimeout>>();
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setOpenBackdrop(true);
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    timer.current = setTimeout(() => {
+      setOpenBackdrop(false);
+      console.log({
+        email: data.get("email"),
+        password: data.get("password"),
+      });
+    }, 2000);
   };
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   return isAuth ? (
     <Navigate to="/" />
@@ -132,6 +130,12 @@ export default function SignUpPage() {
             >
               Sign Up
             </Button>
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={openBackdrop}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/sign-in" variant="body2">
@@ -141,7 +145,7 @@ export default function SignUpPage() {
             </Grid>
           </Box>
         </Box>
-        <Copyright />
+        <Copyright text="Our website" url="http://localhost:5173/" />
       </Container>
     </ThemeProvider>
   );

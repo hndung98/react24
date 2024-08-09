@@ -1,6 +1,9 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdbIcon from "@mui/icons-material/Adb";
+import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Badge } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,10 +19,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { AppProps } from "../types/app";
 import { MenuItemType } from "../types/layout";
+import AppFooter from "./Footer";
 
 const drawerWidth = 240;
 const navItems = [
@@ -35,18 +38,8 @@ const navItems = [
   },
   {
     code: "03",
-    name: "About",
-    path: "/about",
-  },
-  {
-    code: "04",
     name: "Dashboard",
     path: "/dashboard",
-  },
-  {
-    code: "04",
-    name: "Intro",
-    path: "/intro",
   },
 ] as MenuItemType[];
 const app = {
@@ -121,7 +114,7 @@ export default function UserLayout(props: AppProps) {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", sm: "block" },
@@ -148,6 +141,24 @@ export default function UserLayout(props: AppProps) {
           </Box>
           <Box>
             <div className="menu-item">
+              <IconButton
+                size="large"
+                aria-label="show 10 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={10} color="error">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 3 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={3} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -222,9 +233,10 @@ export default function UserLayout(props: AppProps) {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{ p: 3, width: "100%" }}>
         <Toolbar />
         {children}
+        <AppFooter />
       </Box>
     </Box>
   );

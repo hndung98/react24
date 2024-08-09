@@ -1,20 +1,7 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../../common/components/Copyright";
 
 interface FooterProps {
   description: string;
@@ -38,7 +25,7 @@ export default function Footer(props: FooterProps) {
         >
           {description}
         </Typography>
-        <Copyright />
+        <Copyright text="Our website" url="http://localhost:5173/" />
       </Container>
     </Box>
   );

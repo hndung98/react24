@@ -10,35 +10,17 @@ import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import Copyright from "../../common/components/Copyright";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import { mainListItems, secondaryListItems } from "./listItems";
 import Orders from "./Orders";
-
-function Copyright() {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      sx={{ pt: 4 }}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const drawerWidth: number = 240;
 
@@ -205,7 +187,7 @@ export default function DashboardPage() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright />
+            <Copyright text="Our website" url="http://localhost:5173/"/>
           </Container>
         </Box>
       </Box>
